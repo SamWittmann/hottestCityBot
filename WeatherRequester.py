@@ -1,24 +1,23 @@
 from weather import Weather, Unit
-import datetime
 
 
 class WeatherRequester:
     def __init__(self):
         self.weather = Weather(unit=Unit.FAHRENHEIT)
 
-    def query_temperature(self, city_name, state_name):
+    def _query_temperature(self, city_name, state_name):
         try:
             location = self.weather.lookup_by_location(city_name + ', ' + state_name)
             condition = location.condition
             return condition.temp
-        except KeyError as e:
+        except KeyError:
             return 0
-        except AttributeError as e:
+        except AttributeError:
             return 0
 
-    def find_hottest_city(self):
-        hottest = (0, '')
-        with open('top1000cities.txt') as f:
+    def find_hottest_city_and_temp(self):
+        hottest = ('', 0)
+        with open('resources/top1000cities.txt') as f:
             for line in f:
                 split_line = line.split(',')
                 city = split_line[1]
@@ -26,15 +25,9 @@ class WeatherRequester:
 
                 if "'" in city:
                     city = city.replace("\'", "\\\'")
-                temperature = self.query_temperature(city, state)
+                temperature = self._query_temperature(city, state)
 
-                if hottest[0] < temperature:
-                    hottest = (temperature, city + ', ' + state)
+                if hottest[1] < temperature:
+                    hottest = (city + ', ' + state, temperature)
 
         return hottest
-
-
-test = WeatherRequester()
-b4 = datetime.datetime.now()
-print test.find_hottest_city()
-print datetime.datetime.now() - b4
