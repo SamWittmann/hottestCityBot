@@ -1,5 +1,5 @@
 import smtplib
-import os
+import yaml
 from datetime import datetime
 
 
@@ -15,8 +15,10 @@ def report_error(error_message):
     server.ehlo()
     server.starttls()
 
-    email_address = os.getenv("email_address")
-    email_password = os.getenv("email_password")
+    config = yaml.safe_load(file('config.yml', 'r'))
+
+    email_address = config.get("email_address")
+    email_password = config.get("email_password")
 
     if not (email_address and email_password):
         return
