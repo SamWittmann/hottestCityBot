@@ -6,3 +6,4 @@ email_address:
 resource_owner_secret:
 resource_owner_key:
 client_secret:
+open_weather_api_key:
