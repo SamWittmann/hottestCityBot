@@ -28,17 +28,16 @@ class TwitterClient:
             raise EnvironmentError("Client creation failed: couldn't read properties from config file")
 
         self._twitter_auth = OAuth1Session(client_key,
-                                          client_secret=client_secret,
-                                          resource_owner_key=resource_owner_key,
-                                          resource_owner_secret=resource_owner_secret)
+                                           client_secret=client_secret,
+                                           resource_owner_key=resource_owner_key,
+                                           resource_owner_secret=resource_owner_secret)
 
     def post_text_tweet(self, text_content):
         if not self._twitter_auth:
-            raise AttributeError("Twitter client has not yet been implemented")
+            raise AttributeError("Twitter client has not been initialized")
 
         self._twitter_auth.post(url=self._post_tweet_url, data={"status": text_content})
         self.logger.info("Tweet posted!")
-
 
     def get_client(self):
         if self.initialized:

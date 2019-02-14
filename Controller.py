@@ -1,8 +1,10 @@
+from requests import ConnectionError
+from datetime import datetime
+import logging
+
 from Util import report_error
 from TwitterClient import TwitterClient
 from WeatherRequester import WeatherRequester
-from datetime import datetime
-import logging
 
 
 class Controller:
@@ -14,14 +16,12 @@ class Controller:
     def get_hottest_city_and_tweet_result(self):
         try:
             location_temp_tup = self.weather_requester.find_hottest_city_and_temp()
-        except RuntimeError as e:
-            self.logger.error(e.message)
-            report_error(e.message)
-            self.logger.error("Sent error info to hottestcitytwitter@gmail.com")
+            tweet = "Today, the hottest city in the U.S is %s with a temperature of %sF" % location_temp_tup
+            self.twitter_client.post_text_tweet(tweet)
+            self.logger.info("Succesfully posted tweet for " + str(datetime.today().date()))
+        except ConnectionError:
+            self.logger.exception("Run failed: could not establish a connection to an external API.")
+            report_error()
             return -1
-
-        tweet = "Today, the hottest city in the U.S is %s with a temperature of %sF" % location_temp_tup
-        self.twitter_client.post_text_tweet(tweet)
-        self.logger.info("Succesfully posted tweet for " + str(datetime.today().date()))
 
         return 0

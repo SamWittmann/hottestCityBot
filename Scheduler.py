@@ -5,7 +5,7 @@ import logging
 
 # Setup logging
 logger = logging.getLogger('HottestCityBot')
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 
 fh = logging.FileHandler('HottestCityBot.log')
 fh.setLevel(logging.DEBUG)
