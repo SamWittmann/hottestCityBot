@@ -1,5 +1,9 @@
 # hottestCityBot
 
-A Twitter bot to tweet out which of the 1,000 most populous U.S cities is hottest that day.
+A Twitter bot that *used to* tweet out which of the 1,000 most populous U.S cities is hottest that day.
 
-Utilizes the Yahoo Weather API for weather data (https://developer.yahoo.com/weather/), and Miserlou's dataset of the 1,000 most populous cities (https://gist.github.com/Miserlou/11500b2345d3fe850c92).
+## NOTE: This code will no longer execute correctly, as the Weather API library is deprecated and no longer works. 
+
+I've gone ahead and recreated the functionality using a new API. However, I wanted to experiment with running the bot in AWS Lambda, so I've abandoned the OOP architecture found here in favor of a single file script that is much more concise and much more Pythonic.
+
+The new repo can be found [**here**](https://github.com/SamWittmann/HottestCityBot-script)
